@@ -1,13 +1,19 @@
-isIncrease :: Ord a => a -> a -> Bool
+isIncrease :: Int -> Int -> Bool
 isIncrease x y = x < y
 
-pairs :: [a] -> [(a, a)]
-pairs [] = []
-pairs [_] = []
+pairs :: [Int] -> [(Int, Int)]
 pairs (a : b : as) = (a, b) : pairs (b : as)
+pairs _ = []
 
-totalIncreases :: Ord a => [a] -> Int
+slidingWindow :: [Int] -> [Int]
+slidingWindow (a : b : c : rest) = a + b + c : slidingWindow (b : c : rest)
+slidingWindow _ = []
+
+totalIncreases :: [Int] -> Int
 totalIncreases = length . filter (uncurry isIncrease) . pairs
+
+windowIncreases :: [Int] -> Int
+windowIncreases = length . filter (uncurry isIncrease) . pairs . slidingWindow
 
 -- reading / testing
 
